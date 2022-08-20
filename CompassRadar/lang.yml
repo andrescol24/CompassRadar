@@ -1,0 +1,28 @@
+#Configure your menssages preference.
+
+NO_PERMISSION: '&cYou dont have permission to executed this command.'
+PREFFIX: '&e[compassradar]&r '
+NEAREST_PLAYER: '&aTracking player: &6%1% &a- Distance: &6%2% &aBlocks'
+NO_NEAREST: '&eNothing player or location are near'
+NEAREST_LOCATION: '&aTracking Location: &6%1% &a- Distance: &6%2% &aBlocks'
+ADDLOCATION_SUCCESSFUL: '&aThe new location has been added successful'
+REMOVELOCATION_SUCCESSFUL: '&aThe location has been remove successful'
+NEED_COMPASS_IN_HAND: '&cYou need a compass in your main hand'
+PLAYER_TRACKER_DISABLE: '&cThe player tracker is disable'
+PLAYER_TRACKER_DISABLE_IN_WORLD: '&cThe player tracker is disable in this world'
+LOCATION_TRACKER_DISABLE: '&cThe location tracker is disable'
+LOCATION_TRACKER_DISABLE_IN_WORLD: '&cThe location tracker is disable in this world'
+TEAM_SKYWARS: '&aTracking player: &6%1% &aTeam &6%2% &a- Distance: &6%3% &aBlocks'
+FACTIONS: '&aTracking player: &6%1% &aFaction &6%2% &a- Distance: &6%3% &aBlocks'
+CMD_RELOAD: '&ereload plugin.'
+CMD_PLAYER: '&eTrace the nearest player.'
+CMD_LOCATION: '&eTrace the nearest location.'
+CMD_ADD: '&eAdd a location with your position.'
+CMD_ADD_RELATIVE: '&eadd location.'
+CMD_REMOVE: '&eRemove the location with this name.'
+CMD_LOCATIONS: '&eShow the locations list'
+HELP_BEGIN: 
+  - '&eWelcome to plugins help'
+HELP_END: 
+  - '&eBe careful when use a compass, under 50 blocks, if you are'
+  - '&enear to others players with compass, the compass may be crazy'

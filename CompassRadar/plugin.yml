@@ -1,0 +1,47 @@
+name: CompassRadar
+author: Andres F. Morales Gonzalez 
+main: co.andrescol.CompassRadar.Main
+version: 1.0
+description: You can tracker players and locations with this plugin
+
+softdepend: [DuoSkyWars, Factions, PermissionsEx]
+
+commands:
+  compassradar:
+    description: plugin command
+    aliases: compass
+permissions:
+  compassradar.use: {default: op, description: allow use the compass as radar} 
+  compassradar.use.players: {default: op, description: allow use the command /compass players}
+  compassradar.use.locations: {default: op, description: allow use the command /compass locations}
+  compassradar.reload: {default: op, description: allow to reload the plugin}
+  compassradar.help: {default: op, description: allow to show the help message}
+  compassradar.addlocation: {default: op, description: allow to add a location}
+  compassradar.removelocation: {default: op, description: allow to remove a location}
+  compassradar.listlocation: {default: op, description: allow to show the location list}
+  compassradar.*:
+    default: op 
+    description: all plugin's permissions
+    children:
+      compassradar.use: true
+      compassradar.help: true
+      compassradar.reload: true
+      compassradar.addlocation: true
+      compassradar.removelocation: true
+  compassradar.user:
+    default: op
+    description: allow to use thre radar and help command
+    children:
+      compassradar.use.players: true
+      compassradar.use.locations: true
+      compassradar.use: true
+      compassradar.help: true
+  compassradar.admin:
+    default: op
+    description: includes all admins commands
+    children:
+      compassradar.reload: true
+      compassradar.addlocation: true
+      compassradar.removelocation: true
+      compassradar.listlocations: true
+    
