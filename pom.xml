@@ -15,34 +15,26 @@
 	</properties>
 
 	<dependencies>
-		<!-- Local dependency -->
-		<dependency>
-			<groupId>co.andrescol.mc.library</groupId>
-			<artifactId>ASpigotPluginInitializer</artifactId>
-			<version>1.0.0</version>
-			<scope>compile</scope>
-		</dependency>
 
-		<!-- Spigot API and javadocs -->
-		<dependency>
-			<groupId>org.spigotmc</groupId>
+        <dependency>
+            <groupId>com.massivecraft</groupId>
+            <artifactId>Factions</artifactId>
+            <version>2.14.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.massivecraft</groupId>
+            <artifactId>MassiveCore</artifactId>
+            <version>2.14.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Spigot API and javadocs -->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
 			<version>1.19.2-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
-		</dependency>
-
-		<!-- Test -->
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.9.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jetbrains</groupId>
-			<artifactId>annotations</artifactId>
-			<version>RELEASE</version>
-			<scope>compile</scope>
 		</dependency>
 
 	</dependencies>

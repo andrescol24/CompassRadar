@@ -1,27 +1,24 @@
 name: CompassRadar
-version: 1.0.0
-main: co.andrescol.mc.plugin.compassradar.CompassRadarPlugin
+author: Andres F. Morales Gonzalez
+main: co.andrescol.mc.plugin.compassradar.Main
+version: 1.0
 description: You can tracker players and locations with this plugin
-softdepend: [DuoSkyWars, Factions]
-author: xX_andrescol_Xx
-api-version: 1.19
-website: none
+
+softdepend: [ DuoSkyWars, Factions, PermissionsEx ]
 
 commands:
   compassradar:
-    description: Main command to use the compassradar
-    permission-message: '[compassradar] You do not have permission for this command'
-    permission: compassradar
-    usage: Incorrect usage, try /compassradar
+    description: plugin command
+    aliases: compass
 permissions:
-  compassradar.use: {default: op, description: allow use the compass as radar}
-  compassradar.use.players: {default: op, description: allow use the command /compass players}
-  compassradar.use.locations: {default: op, description: allow use the command /compass locations}
-  compassradar.reload: {default: op, description: allow to reload the plugin}
-  compassradar.help: {default: op, description: allow to show the help message}
-  compassradar.addlocation: {default: op, description: allow to add a location}
-  compassradar.removelocation: {default: op, description: allow to remove a location}
-  compassradar.listlocation: {default: op, description: allow to show the location list}
+  compassradar.use: { default: op, description: allow use the compass as radar }
+  compassradar.use.players: { default: op, description: allow use the command /compass players }
+  compassradar.use.locations: { default: op, description: allow use the command /compass locations }
+  compassradar.reload: { default: op, description: allow to reload the plugin }
+  compassradar.help: { default: op, description: allow to show the help message }
+  compassradar.addlocation: { default: op, description: allow to add a location }
+  compassradar.removelocation: { default: op, description: allow to remove a location }
+  compassradar.listlocation: { default: op, description: allow to show the location list }
   compassradar.*:
     default: op
     description: all plugin's permissions
@@ -47,3 +44,4 @@ permissions:
       compassradar.addlocation: true
       compassradar.removelocation: true
       compassradar.listlocations: true
+    

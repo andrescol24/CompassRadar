@@ -32,7 +32,3 @@ trackerLocation:
       world: world
   disableInWorlds: 
   - Lobby
-
-hooks:
-  factions:
-    onlyNeutralEnemy: true
