@@ -31,8 +31,6 @@ public abstract class Tools {
     }
 
     public static String msgHook(CompassPlayer player) {
-        if (Main.isHookFactions())
-            return msg(Lang.FACTIONS, player.getPlayer().getName(), player.getFaction(), Integer.toString(player.getDist()));
         return msg(Lang.NEAREST_PLAYER, player.getPlayer().getName(), Integer.toString(player.getDist()));
     }
 }

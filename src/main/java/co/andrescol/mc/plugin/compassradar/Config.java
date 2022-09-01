@@ -52,8 +52,4 @@ public class Config {
     public int getMaxLocationDistance() {
         return this.maxLocation;
     }
-
-    public boolean onlyNE() {
-        return this.onlyNE;
-    }
 }

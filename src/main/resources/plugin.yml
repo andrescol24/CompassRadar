@@ -3,8 +3,7 @@ author: Andres F. Morales Gonzalez
 main: co.andrescol.mc.plugin.compassradar.Main
 version: 1.0
 description: You can tracker players and locations with this plugin
-
-softdepend: [ DuoSkyWars, Factions, PermissionsEx ]
+api-version: 1.19
 
 commands:
   compassradar:

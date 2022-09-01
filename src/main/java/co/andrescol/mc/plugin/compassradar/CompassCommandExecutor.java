@@ -1,6 +1,5 @@
 package co.andrescol.mc.plugin.compassradar;
 
-import co.andrescol.mc.plugin.compassradar.Hooks.FactionsHook;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -39,11 +38,7 @@ public class CompassCommandExecutor implements CommandExecutor {
                                     ItemStack compass;
                                     if ((compass = player.getInventory().getItemInMainHand()).getType() == Material.COMPASS) {
                                         CompassPlayer target;
-                                        if (Main.isHookFactions()) {
-                                            target = FactionsHook.getNearest(world.getPlayers(), player);
-                                        } else {
-                                            target = CompassPlayer.getNearest(world.getPlayers(), player);
-                                        }
+                                        target = CompassPlayer.getNearest(world.getPlayers(), player);
                                         if (target == null) {
                                             Tools.msgItemRename(player, compass, Tools.msg(Lang.NO_NEAREST));
                                         } else {

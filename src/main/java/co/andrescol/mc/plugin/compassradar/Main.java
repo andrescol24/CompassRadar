@@ -19,8 +19,6 @@ public class Main extends JavaPlugin {
 
 	private static ConsoleCommandSender ccs;
 
-	private static boolean hookFactions = false;
-
 	private PluginManager pm;
 
 	public void onEnable() {
@@ -36,7 +34,6 @@ public class Main extends JavaPlugin {
 		this.listener = new CompassListener();
 		Objects.requireNonNull(getCommand("compassradar")).setExecutor(new CompassCommandExecutor());
 		this.pm.registerEvents(this.listener, (Plugin) this);
-		hooks();
 	}
 
 	public void onDisable() {
@@ -62,19 +59,4 @@ public class Main extends JavaPlugin {
 		onEnable();
 	}
 
-	public static void consoleMsg(String msg) {
-		ccs.sendMessage(msg);
-	}
-
-	public void hooks() {
-		Plugin factions = this.pm.getPlugin("Factions");
-		if (this.pm.isPluginEnabled(factions)) {
-			hookFactions = true;
-			consoleMsg(Tools.msgWithPreffix("&eHooked with Factions!!"));
-		}
-	}
-
-	public static boolean isHookFactions() {
-		return hookFactions;
-	}
 }

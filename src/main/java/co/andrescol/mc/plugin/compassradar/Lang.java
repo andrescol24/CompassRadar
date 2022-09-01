@@ -39,10 +39,6 @@ public abstract class Lang {
 
     public static String LOCATION_TRACKER_DISABLE_IN_WORLD;
 
-    public static String TEAM_SKYWARS;
-
-    public static String FACTIONS;
-
     public static String CMD_RELOAD;
 
     public static String CMD_PLAYER;

@@ -1,6 +1,5 @@
 package co.andrescol.mc.plugin.compassradar;
 
-import co.andrescol.mc.plugin.compassradar.Hooks.FactionsHook;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -44,13 +43,7 @@ public class CompassListener implements Listener {
 
     private CompassPlayer workPlayer(World world, Player player) {
         if (Main.getConfiguration().isPlayerEnable()) {
-            CompassPlayer nearest;
-            if (Main.isHookFactions()) {
-                nearest = FactionsHook.getNearest(world.getPlayers(), player);
-            } else {
-                nearest = CompassPlayer.getNearest(world.getPlayers(), player);
-            }
-            return nearest;
+            return CompassPlayer.getNearest(world.getPlayers(), player);
         }
         return null;
     }
