@@ -1,6 +1,8 @@
 package co.andrescol.mc.plugin.compassradar;
 
-import org.bukkit.Material;
+import co.andrescol.mc.library.configuration.AMessage;
+import co.andrescol.mc.plugin.compassradar.configuration.CustomConfiguration;
+import co.andrescol.mc.plugin.compassradar.configuration.Message;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,45 +15,37 @@ public class CompassListener implements Listener {
     public void onCompassTracker(PlayerInteractEvent e) {
         Player player = e.getPlayer();
         World world = player.getWorld();
-        CompassLocation location;
-        CompassPlayer target;
+        CompassLocation nearestLocation = null;
+        CompassPlayer nearestPlayer = null;
         ItemStack compass = player.getInventory().getItemInMainHand();
-        if (player.hasPermission("compassradar.use") && compass.getType() == Material.COMPASS) {
-            if (Main.getConfiguration().getPDW().contains(world.getName()) || Main.getConfiguration().getLDW().contains(world.getName()))
-                return;
-            target = workPlayer(world, player);
-            location = workLocation(player);
-            if (target != null && location != null) {
-                if (target.getDist() < location.getDist()) {
-                    player.setCompassTarget(target.getPlayer().getLocation());
-                    Tools.msgItemRename(player, compass, Tools.msgHook(target));
-                } else {
-                    player.setCompassTarget(location.getLocation());
-                    Tools.msgItemRename(player, compass, Tools.msg(Lang.NEAREST_LOCATION, location.getName(), Integer.toString(location.getDist())));
-                }
-            } else if (target != null) {
-                player.setCompassTarget(target.getPlayer().getLocation());
-                Tools.msgItemRename(player, compass, Tools.msgHook(target));
-            } else if (location != null) {
-                player.setCompassTarget(location.getLocation());
-                Tools.msgItemRename(player, compass, Tools.msg(Lang.NEAREST_LOCATION, location.getName(), Integer.toString(location.getDist())));
+
+        CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
+        if (configuration.isLocationEnable() && !configuration.getPlayerDisableWorlds().contains(world.getName())) {
+            nearestLocation = CompassLocation.getNearestLocation(player);
+        }
+
+        if (configuration.isPlayerEnable() && !configuration.getLocationDisableWorlds().contains(world.getName())) {
+            nearestPlayer = CompassPlayer.getNearest(world.getPlayers(), player);
+        }
+
+        String message;
+        if (nearestLocation != null && nearestPlayer != null) {
+            if (nearestPlayer.getDist() < nearestLocation.getDist()) {
+                player.setCompassTarget(nearestPlayer.getPlayer().getLocation());
+                message = AMessage.getMessage(Message.NEAREST_PLAYER, nearestPlayer.getPlayer().getName(), nearestPlayer.getDist());
             } else {
-                Tools.msgItemRename(player, compass, Lang.NO_NEAREST);
+                player.setCompassTarget(nearestLocation.getLocation());
+                message = AMessage.getMessage(Message.NEAREST_LOCATION, nearestLocation.getName(), nearestLocation.getDist());
             }
+        } else if (nearestPlayer != null) {
+            player.setCompassTarget(nearestPlayer.getPlayer().getLocation());
+            message = AMessage.getMessage(Message.NEAREST_PLAYER, nearestPlayer.getPlayer().getName(), nearestPlayer.getDist());
+        } else if (nearestLocation != null) {
+            player.setCompassTarget(nearestLocation.getLocation());
+            message = AMessage.getMessage(Message.NEAREST_LOCATION, nearestLocation.getName(), nearestLocation.getDist());
+        } else {
+            message = AMessage.getMessage(Message.NO_NEAREST);
         }
-    }
-
-    private CompassPlayer workPlayer(World world, Player player) {
-        if (Main.getConfiguration().isPlayerEnable()) {
-            return CompassPlayer.getNearest(world.getPlayers(), player);
-        }
-        return null;
-    }
-
-    private CompassLocation workLocation(Player player) {
-        if (Main.getConfiguration().isLocationEnable()) {
-            return CompassLocation.getNearestLocation(player);
-        }
-        return null;
+        Tools.msgItemRename(player, compass, message);
     }
 }

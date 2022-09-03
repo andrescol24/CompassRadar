@@ -1,5 +1,6 @@
 package co.andrescol.mc.plugin.compassradar;
 
+import co.andrescol.mc.plugin.compassradar.configuration.CustomConfiguration;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -11,14 +12,13 @@ import java.util.Set;
 
 public class CompassLocation {
     private final String name;
-
     private final Location location;
 
     private int dist;
 
     public CompassLocation(ConfigurationSection section) {
         this.name = section.getName();
-        this.location = new Location(Main.getPlugin().getServer().getWorld(Objects.requireNonNull(section.getString("world"))),
+        this.location = new Location(CompassRadarPlugin.getInstance().getServer().getWorld(Objects.requireNonNull(section.getString("world"))),
                 section.getInt("x"), section.getInt("y"), section.getInt("z"));
     }
 
@@ -29,13 +29,14 @@ public class CompassLocation {
 
     public CompassLocation(String name, String world, int x, int y, int z) {
         this.name = name;
-        this.location = new Location(Main.getPlugin().getServer().getWorld(world), x, y, z);
+        this.location = new Location(CompassRadarPlugin.getInstance().getServer().getWorld(world), x, y, z);
     }
 
     public static CompassLocation getNearestLocation(Player p) {
         CompassLocation nearest = null;
-        int dist = (Main.getConfiguration().getMaxLocationDistance() == 0) ? Integer.MAX_VALUE : Main.getConfiguration().getMaxLocationDistance();
-        Set<Map.Entry<String, CompassLocation>> set = Main.getConfiguration().getLocations().entrySet();
+        CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
+        int dist = (configuration.getMaxLocation() == 0) ? Integer.MAX_VALUE : configuration.getMaxLocation();
+        Set<Map.Entry<String, CompassLocation>> set = configuration.getLocations().entrySet();
         for (Map.Entry<String, CompassLocation> entry : set) {
             CompassLocation l = entry.getValue();
             int aux = (int) p.getLocation().distance(l.location);
@@ -56,57 +57,64 @@ public class CompassLocation {
         return this.location;
     }
 
-    public static void addLocation(Player player, String name) throws Exception {
-        HashMap<String, CompassLocation> list = Main.getConfiguration().getLocations();
+    public static boolean addLocation(Player player, String name) {
+        CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
+        HashMap<String, CompassLocation> list = configuration.getLocations();
         if (list.containsKey(name))
-            throw new Exception("this location with this name already exist");
+            return false;
         CompassLocation cl = new CompassLocation(player, name);
         list.put(name, cl);
         cl.save();
+        return true;
     }
 
-    public static void addLocation(String name, String world, int x, int y, int z) throws Exception {
-        HashMap<String, CompassLocation> list = Main.getConfiguration().getLocations();
-        if (Main.getPlugin().getServer().getWorld(world) == null)
-            throw new Exception("&cThe world " + world + " doesnt exist");
+    public static boolean addLocation(String name, String world, int x, int y, int z) {
+        CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
+        HashMap<String, CompassLocation> list = configuration.getLocations();
+        if (CompassRadarPlugin.getInstance().getServer().getWorld(world) == null)
+            return false;
         if (list.containsKey(name))
-            throw new Exception("&cthis location with this name already exist");
+            return false;
         CompassLocation cl = new CompassLocation(name, world, x, y, z);
         list.put(name, cl);
         cl.save();
+        return true;
     }
 
     public void save() {
-        ConfigurationSection section = Main.getPlugin().getConfig().getConfigurationSection("trackerLocation.locations");
+        ConfigurationSection section = CompassRadarPlugin.getInstance().getConfig().getConfigurationSection("trackerLocation.locations");
         ConfigurationSection loc = section.createSection(this.name);
         loc.set("x", this.location.getBlockX());
         loc.set("y", this.location.getBlockY());
         loc.set("z", this.location.getBlockZ());
         loc.set("world", Objects.requireNonNull(this.location.getWorld()).getName());
-        Main.getPlugin().saveConfig();
+        CompassRadarPlugin.getInstance().saveConfig();
     }
 
-    public static void deleteLoc(String name) throws Exception {
-        HashMap<String, CompassLocation> l = Main.getConfiguration().getLocations();
+    public static boolean deleteLoc(String name) {
+        CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
+        HashMap<String, CompassLocation> l = configuration.getLocations();
         if (l.containsKey(name)) {
             l.remove(name);
-            ConfigurationSection section = Main.getPlugin().getConfig().getConfigurationSection("trackerLocation.locations");
+            ConfigurationSection section = CompassRadarPlugin.getInstance().getConfig().getConfigurationSection("trackerLocation.locations");
             if (section != null) {
                 section.set(name, null);
-                Main.getPlugin().saveConfig();
+                CompassRadarPlugin.getInstance().saveConfig();
+                return true;
             } else {
-                throw new Exception("The section trackerLocation.locations." + name + "doesnt exist, verific your config.yml");
+                return false;
             }
         } else {
-            throw new Exception("The location with name " + name + " doesnt exist");
+            return false;
         }
     }
 
     public static String getList() {
-        HashMap<String, CompassLocation> list = Main.getConfiguration().getLocations();
+        CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
+        HashMap<String, CompassLocation> list = configuration.getLocations();
         Set<Map.Entry<String, CompassLocation>> set = list.entrySet();
         if (list.isEmpty())
-            return Lang.PREFFIX + "&cThere are not Locations";
+            return null;
         String msg = "&7--------&e[&7List Of Locations&e]&7--------\n";
         for (Map.Entry<String, CompassLocation> e : set)
             msg = e.getValue().toString() + "\n";

@@ -1,5 +1,6 @@
 package co.andrescol.mc.plugin.compassradar;
 
+import co.andrescol.mc.plugin.compassradar.configuration.CustomConfiguration;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -10,15 +11,7 @@ public class CompassPlayer {
 
     private int dist;
 
-    private String faction;
-
     private CompassPlayer() {
-    }
-
-    public CompassPlayer(Player p, int d, String ToF) {
-        this.player = p;
-        this.dist = d;
-        this.faction = ToF;
     }
 
     public Player getPlayer() {
@@ -29,13 +22,11 @@ public class CompassPlayer {
         return this.dist;
     }
 
-    public String getFaction() {
-        return this.faction;
-    }
 
     public static CompassPlayer getNearest(List<Player> players, Player player) {
         CompassPlayer nearest = new CompassPlayer();
-        nearest.dist = (Main.getConfiguration().getMaxPlayerDistance() == 0) ? Integer.MAX_VALUE : Main.getConfiguration().getMaxPlayerDistance();
+        CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
+        nearest.dist = (configuration.getMaxPlayer() == 0) ? Integer.MAX_VALUE : configuration.getMaxPlayer();
         for (Player p : players) {
             if (p != player &&
                     p.getGameMode().equals(GameMode.SURVIVAL)) {
