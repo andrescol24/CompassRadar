@@ -13,6 +13,8 @@ import org.bukkit.inventory.ItemStack;
 public class CompassListener implements Listener {
     @EventHandler
     public void onCompassTracker(PlayerInteractEvent e) {
+        if (!e.getPlayer().hasPermission("compassradar.use")) return;
+
         Player player = e.getPlayer();
         World world = player.getWorld();
         CompassLocation nearestLocation = null;

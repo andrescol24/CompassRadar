@@ -22,13 +22,8 @@ trackerPlayer:
   - Lobby
 
 trackerLocation:
-  enable: false
+  enable: true
   maxDistance: 0
   locations:
-    name: 
-      x: 0
-      y: 0
-      z: 0
-      world: world
   disableInWorlds: 
   - Lobby

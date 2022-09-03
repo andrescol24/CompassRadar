@@ -13,8 +13,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +20,11 @@ import java.util.List;
 public class LocationTrackSubCommand extends ASubCommand {
 
     public LocationTrackSubCommand() {
-        super("location", "compassradar.use.locations");
+        super("location", "compassradar.cmd.location");
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
         Player player = (Player) commandSender;
         World world = player.getWorld();
@@ -61,9 +59,8 @@ public class LocationTrackSubCommand extends ASubCommand {
         return sender instanceof Player;
     }
 
-    @Nullable
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
         return new ArrayList<>();
     }
 }

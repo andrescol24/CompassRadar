@@ -8,7 +8,6 @@ import co.andrescol.mc.plugin.compassradar.configuration.CustomConfiguration;
 import co.andrescol.mc.plugin.compassradar.configuration.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +15,11 @@ import java.util.List;
 public class RemoveLocationSubCommand extends ASubCommand {
 
     public RemoveLocationSubCommand() {
-        super("remove", "compassradar.removelocation");
+        super("remove", "compassradar.cmd.removelocation");
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
         if (configuration.isLocationEnable()) {
             if (CompassLocation.deleteLoc(args[1])) {
@@ -40,7 +39,7 @@ public class RemoveLocationSubCommand extends ASubCommand {
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
         return new ArrayList<>();
     }
 }

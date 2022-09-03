@@ -11,8 +11,6 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +18,11 @@ import java.util.List;
 public class AddLocationSubCommand extends ASubCommand {
 
     public AddLocationSubCommand() {
-        super("add", "compassradar.addlocation");
+        super("add", "  compassradar.cmd.addlocation");
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
         World world = args.length == 2 ? ((Player) commandSender).getWorld() : Bukkit.getWorld(args[2]);
 
@@ -60,9 +58,8 @@ public class AddLocationSubCommand extends ASubCommand {
         return (args.length == 2 && sender instanceof Player) || args.length == 6;
     }
 
-    @Nullable
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
         return new ArrayList<>();
     }
 }

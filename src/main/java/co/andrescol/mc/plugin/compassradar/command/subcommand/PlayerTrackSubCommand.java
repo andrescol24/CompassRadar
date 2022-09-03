@@ -13,18 +13,17 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class PlayerTrackSubCommand extends ASubCommand {
 
     public PlayerTrackSubCommand() {
-        super("player", "compassradar.use.players");
+        super("player", "compassradar.cmd.player");
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
         Player player = (Player) commandSender;
         World world = player.getWorld();
@@ -60,7 +59,7 @@ public class PlayerTrackSubCommand extends ASubCommand {
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
         return null;
     }
 }

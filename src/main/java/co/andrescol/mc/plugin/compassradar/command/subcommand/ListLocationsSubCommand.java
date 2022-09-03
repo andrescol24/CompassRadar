@@ -8,7 +8,6 @@ import co.andrescol.mc.plugin.compassradar.configuration.CustomConfiguration;
 import co.andrescol.mc.plugin.compassradar.configuration.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +15,11 @@ import java.util.List;
 public class ListLocationsSubCommand extends ASubCommand {
 
     public ListLocationsSubCommand() {
-        super("locations", "compassradar.listlocation");
+        super("locations", "compassradar.cmd.listlocation");
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
         if (configuration.isLocationEnable()) {
             String listString = CompassLocation.getList();
@@ -40,7 +39,7 @@ public class ListLocationsSubCommand extends ASubCommand {
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, String[] strings) {
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
         return new ArrayList<>();
     }
 }

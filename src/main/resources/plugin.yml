@@ -1,7 +1,7 @@
 name: CompassRadar
-author: Andres F. Morales Gonzalez
-main: co.andrescol.mc.plugin.compassradar.Main
-version: 1.0
+author: xX_andrescol_Xx
+main: co.andrescol.mc.plugin.compassradar.CompassRadarPlugin
+version: 1.1.0
 description: You can tracker players and locations with this plugin
 api-version: 1.19
 
@@ -9,38 +9,21 @@ commands:
   compassradar:
     description: plugin command
     aliases: compass
+    permission: compassradar.cmd
 permissions:
-  compassradar.use: { default: op, description: allow use the compass as radar }
-  compassradar.use.players: { default: op, description: allow use the command /compass players }
-  compassradar.use.locations: { default: op, description: allow use the command /compass locations }
-  compassradar.reload: { default: op, description: allow to reload the plugin }
-  compassradar.help: { default: op, description: allow to show the help message }
-  compassradar.addlocation: { default: op, description: allow to add a location }
-  compassradar.removelocation: { default: op, description: allow to remove a location }
-  compassradar.listlocation: { default: op, description: allow to show the location list }
-  compassradar.*:
-    default: op
-    description: all plugin's permissions
-    children:
-      compassradar.use: true
-      compassradar.help: true
-      compassradar.reload: true
-      compassradar.addlocation: true
-      compassradar.removelocation: true
-  compassradar.user:
+  compassradar.cmd: { default: op, description: allow to see the help message }
+  compassradar.use: { default: op, description: allow use the compass as radar from main hand }
+  compassradar.cmd.player: { default: op, description: allow use the command /compass player }
+  compassradar.cmd.location: { default: op, description: allow use the command /compass location }
+  compassradar.cmd.addlocation: { default: op, description: allow to add a location }
+  compassradar.cmd.removelocation: { default: op, description: allow to remove a location }
+  compassradar.cmd.listlocation: { default: op, description: allow to show the location list }
+  compassradar.cmd.reload: { default: op, description: allow to reload the plugin }
+  compassradar.player:
     default: op
     description: allow to use thre radar and help command
     children:
-      compassradar.use.players: true
-      compassradar.use.locations: true
+      compassradar.cmd: true
+      compassradar.cmd.player: true
+      compassradar.cmd.location: true
       compassradar.use: true
-      compassradar.help: true
-  compassradar.admin:
-    default: op
-    description: includes all admins commands
-    children:
-      compassradar.reload: true
-      compassradar.addlocation: true
-      compassradar.removelocation: true
-      compassradar.listlocations: true
-    
