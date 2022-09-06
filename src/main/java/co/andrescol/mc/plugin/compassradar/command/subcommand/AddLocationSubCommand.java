@@ -2,10 +2,11 @@ package co.andrescol.mc.plugin.compassradar.command.subcommand;
 
 import co.andrescol.mc.library.command.ASubCommand;
 import co.andrescol.mc.library.configuration.AMessage;
-import co.andrescol.mc.plugin.compassradar.CompassLocation;
 import co.andrescol.mc.plugin.compassradar.CompassRadarPlugin;
 import co.andrescol.mc.plugin.compassradar.configuration.CustomConfiguration;
 import co.andrescol.mc.plugin.compassradar.configuration.Message;
+import co.andrescol.mc.plugin.compassradar.data.CompassLocationData;
+import co.andrescol.mc.plugin.compassradar.object.CompassLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -37,15 +38,16 @@ public class AddLocationSubCommand extends ASubCommand {
             return true;
         }
 
-        boolean added = false;
+        CompassLocation compassLocation;
         if (args.length == 2) { // Add location with current location
             Player player = (Player) commandSender;
-            added = CompassLocation.addLocation(player, args[1]);
-        } else if (args.length == 6) { // Add specific location
-            added = CompassLocation.addLocation(args[1], args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
+            compassLocation = new CompassLocation(player, args[1]);
+        } else { // Add specific location
+            compassLocation = new CompassLocation(args[1], args[2],
+                    Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
         }
 
-        if (added) {
+        if (CompassLocationData.getInstance().addCompassLocation(compassLocation)) {
             AMessage.sendMessage(commandSender, Message.ADD_LOCATION_SUCCESSFUL);
         } else {
             AMessage.sendMessage(commandSender, Message.ADD_LOCATION_ALREADY_EXISTS, args[1]);

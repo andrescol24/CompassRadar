@@ -1,8 +1,10 @@
 package co.andrescol.mc.plugin.compassradar;
 
-import co.andrescol.mc.library.configuration.AMessage;
 import co.andrescol.mc.plugin.compassradar.configuration.CustomConfiguration;
 import co.andrescol.mc.plugin.compassradar.configuration.Message;
+import co.andrescol.mc.plugin.compassradar.data.CompassLocationData;
+import co.andrescol.mc.plugin.compassradar.object.TrackedPosition;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,40 +16,43 @@ public class CompassListener implements Listener {
     @EventHandler
     public void onCompassTracker(PlayerInteractEvent e) {
         if (!e.getPlayer().hasPermission("compassradar.use")) return;
+        if (Material.COMPASS != e.getPlayer().getInventory().getItemInMainHand().getType()) return;
 
         Player player = e.getPlayer();
         World world = player.getWorld();
-        CompassLocation nearestLocation = null;
-        CompassPlayer nearestPlayer = null;
+        TrackedPosition nearestLocation = null;
+        TrackedPosition nearestPlayer = null;
         ItemStack compass = player.getInventory().getItemInMainHand();
 
         CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
         if (configuration.isLocationEnable() && !configuration.getPlayerDisableWorlds().contains(world.getName())) {
-            nearestLocation = CompassLocation.getNearestLocation(player);
+            nearestLocation = CompassLocationData.getInstance().getNearestLocation(player).orElse(null);
         }
 
         if (configuration.isPlayerEnable() && !configuration.getLocationDisableWorlds().contains(world.getName())) {
-            nearestPlayer = CompassPlayer.getNearest(world.getPlayers(), player);
+            nearestPlayer = Tools.getNearestPlayer(world.getPlayers(), player).orElse(null);
         }
 
-        String message;
+        Message message;
+        TrackedPosition positionToGo;
         if (nearestLocation != null && nearestPlayer != null) {
-            if (nearestPlayer.getDist() < nearestLocation.getDist()) {
-                player.setCompassTarget(nearestPlayer.getPlayer().getLocation());
-                message = AMessage.getMessage(Message.NEAREST_PLAYER, nearestPlayer.getPlayer().getName(), nearestPlayer.getDist());
+            if (nearestPlayer.distance() < nearestLocation.distance()) {
+                positionToGo = nearestPlayer;
+                message = Message.NEAREST_PLAYER;
             } else {
-                player.setCompassTarget(nearestLocation.getLocation());
-                message = AMessage.getMessage(Message.NEAREST_LOCATION, nearestLocation.getName(), nearestLocation.getDist());
+                positionToGo = nearestLocation;
+                message = Message.NEAREST_LOCATION;
             }
         } else if (nearestPlayer != null) {
-            player.setCompassTarget(nearestPlayer.getPlayer().getLocation());
-            message = AMessage.getMessage(Message.NEAREST_PLAYER, nearestPlayer.getPlayer().getName(), nearestPlayer.getDist());
+            positionToGo = nearestPlayer;
+            message = Message.NEAREST_PLAYER;
         } else if (nearestLocation != null) {
-            player.setCompassTarget(nearestLocation.getLocation());
-            message = AMessage.getMessage(Message.NEAREST_LOCATION, nearestLocation.getName(), nearestLocation.getDist());
+            positionToGo = nearestLocation;
+            message = Message.NEAREST_LOCATION;
         } else {
-            message = AMessage.getMessage(Message.NO_NEAREST);
+            positionToGo = new TrackedPosition("", player, 0, player.getLocation());
+            message = Message.NO_NEAREST;
         }
-        Tools.msgItemRename(player, compass, message);
+        Tools.showMessageInItem(positionToGo, compass, message);
     }
 }

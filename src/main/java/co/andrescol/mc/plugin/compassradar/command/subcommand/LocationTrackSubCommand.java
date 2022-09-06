@@ -2,11 +2,12 @@ package co.andrescol.mc.plugin.compassradar.command.subcommand;
 
 import co.andrescol.mc.library.command.ASubCommand;
 import co.andrescol.mc.library.configuration.AMessage;
-import co.andrescol.mc.plugin.compassradar.CompassLocation;
 import co.andrescol.mc.plugin.compassradar.CompassRadarPlugin;
 import co.andrescol.mc.plugin.compassradar.Tools;
 import co.andrescol.mc.plugin.compassradar.configuration.CustomConfiguration;
 import co.andrescol.mc.plugin.compassradar.configuration.Message;
+import co.andrescol.mc.plugin.compassradar.data.CompassLocationData;
+import co.andrescol.mc.plugin.compassradar.object.TrackedPosition;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -16,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class LocationTrackSubCommand extends ASubCommand {
 
@@ -39,15 +41,17 @@ public class LocationTrackSubCommand extends ASubCommand {
 
         ItemStack itemStack;
         if ((itemStack = player.getInventory().getItemInMainHand()).getType() == Material.COMPASS) {
-            CompassLocation nearestLocation = CompassLocation.getNearestLocation(player);
-            String message;
-            if (nearestLocation != null) {
-                player.setCompassTarget(nearestLocation.getLocation());
-                message = AMessage.getMessage(Message.NEAREST_LOCATION, nearestLocation.getName(), nearestLocation.getDist());
+            Optional<TrackedPosition> nearestLocationOptional = CompassLocationData.getInstance().getNearestLocation(player);
+            TrackedPosition positionToGo;
+            Message message;
+            if (nearestLocationOptional.isPresent()) {
+                positionToGo = nearestLocationOptional.get();
+                message = Message.NEAREST_LOCATION;
             } else {
-                message = AMessage.getMessage(Message.NO_NEAREST);
+                positionToGo = new TrackedPosition("", player, 0, player.getLocation());
+                message = Message.NO_NEAREST;
             }
-            Tools.msgItemRename(player, itemStack, message);
+            Tools.showMessageInItem(positionToGo, itemStack, message);
         } else {
             AMessage.sendMessage(commandSender, Message.NEED_COMPASS_IN_HAND);
         }

@@ -2,10 +2,10 @@ package co.andrescol.mc.plugin.compassradar.command.subcommand;
 
 import co.andrescol.mc.library.command.ASubCommand;
 import co.andrescol.mc.library.configuration.AMessage;
-import co.andrescol.mc.plugin.compassradar.CompassLocation;
 import co.andrescol.mc.plugin.compassradar.CompassRadarPlugin;
 import co.andrescol.mc.plugin.compassradar.configuration.CustomConfiguration;
 import co.andrescol.mc.plugin.compassradar.configuration.Message;
+import co.andrescol.mc.plugin.compassradar.data.CompassLocationData;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -22,9 +22,9 @@ public class ListLocationsSubCommand extends ASubCommand {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
         if (configuration.isLocationEnable()) {
-            String listString = CompassLocation.getList();
+            String listString = CompassLocationData.getInstance().getListOfCompassLocationAsString();
             if (listString != null)
-                AMessage.sendMessage(commandSender, Message.LOCATIONS, CompassLocation.getList());
+                AMessage.sendMessage(commandSender, Message.LOCATIONS, listString);
             else
                 AMessage.sendMessage(commandSender, Message.NO_LOCATIONS_FOUND);
         } else {

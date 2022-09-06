@@ -2,8 +2,8 @@ package co.andrescol.mc.plugin.compassradar.configuration;
 
 import co.andrescol.mc.library.configuration.AConfigurationKey;
 import co.andrescol.mc.library.configuration.AConfigurationObject;
-import co.andrescol.mc.plugin.compassradar.CompassLocation;
 import co.andrescol.mc.plugin.compassradar.CompassRadarPlugin;
+import co.andrescol.mc.plugin.compassradar.object.CompassLocation;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.HashMap;

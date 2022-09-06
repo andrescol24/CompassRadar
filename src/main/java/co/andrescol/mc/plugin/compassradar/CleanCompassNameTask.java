@@ -8,18 +8,17 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 
-public class UpdateCompassTask extends BukkitRunnable {
+public class CleanCompassNameTask extends BukkitRunnable {
     private final ItemStack compass;
-
     private final Player player;
 
-    public UpdateCompassTask(Player p, ItemStack compass) {
-        this.compass = compass;
-        this.player = p;
+    public CleanCompassNameTask(Player player, ItemStack item) {
+        this.compass = item;
+        this.player = player;
     }
 
     public void run() {
-        if (!this.player.getInventory().contains(this.compass)) {
+        if (!this.player.getInventory().getItemInMainHand().equals(this.compass)) {
             cancel();
         } else {
             ItemStack help = new ItemStack(Material.COMPASS);
