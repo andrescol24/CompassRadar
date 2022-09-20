@@ -20,10 +20,11 @@ permissions:
   compassradar.cmd.listlocation: { default: op, description: allow to show the location list }
   compassradar.cmd.reload: { default: op, description: allow to reload the plugin }
   compassradar.player:
-    default: op
-    description: allow to use thre radar and help command
+    default: false
+    description: allow to use the compass from main hand, command player, locations and location
     children:
       compassradar.cmd: true
       compassradar.cmd.player: true
       compassradar.cmd.location: true
+      compassradar.cmd.locations: true
       compassradar.use: true
