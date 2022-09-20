@@ -5,6 +5,8 @@
 # trackerPlayer.disableInWorlds: put here the worlds where you want the compass doesn't tracker players
 # trackerPlayer.enable: Do you want tracker players?
 # trackerPlayer.maxDistance: It's the max distance on which compass is going to find players. Set 0 for all the world
+# trackerPlayer.playerNameUntil: Distance up to which the player name is displayed
+# trackerPlayer.  stopTrackingAt: Distance up to which the players are tracked
 # trackerLocation: You can create specific location for what the compass points them
 # trakcerLocation.enable: Do you want to enable this?
 # trakcerLocation.maxDistance: Max distance o which compass is going to find locations. set 0 for all the world
