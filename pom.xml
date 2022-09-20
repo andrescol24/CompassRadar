@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>co.andrescol.mc.plugin.comapssradar</groupId>
     <artifactId>CompassRadar</artifactId>
-    <version>1.1.0</version>
+    <version>2.0.0</version>
     <name>CompassRadar</name>
     <description>Minecraft plugin that allow to track players with the compass</description>
 
