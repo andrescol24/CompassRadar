@@ -17,7 +17,14 @@ public interface Tools {
 
     static void showMessageInItem(TrackedPosition trackedPosition, ItemStack item, Message message) {
         int distance = Tools.calculateDistance(trackedPosition.player().getLocation(), trackedPosition.destination());
-        String messageToShow = AMessage.getMessage(message, trackedPosition.destinationName(), distance);
+        CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
+
+        String messageToShow;
+        if (message == Message.NEAREST_PLAYER && distance < configuration.getPlayerNameUntil()) {
+            messageToShow = AMessage.getMessage(Message.NEAREST_PLAYER_WITHOUT_NAME, distance);
+        } else {
+            messageToShow = AMessage.getMessage(message, trackedPosition.destinationName(), distance);
+        }
 
         trackedPosition.player().setCompassTarget(trackedPosition.destination());
         ItemMeta itemMeta = item.getItemMeta();
@@ -41,7 +48,7 @@ public interface Tools {
         for (Player otherPlayer : players) {
             int distance = calculateDistance(otherPlayer.getLocation(), player.getLocation());
             if (otherPlayer != player && otherPlayer.getGameMode().equals(GameMode.SURVIVAL)) {
-                if (distance < nearestDistance) {
+                if (distance < nearestDistance && distance > configuration.getStopTrackingAt()) {
                     nearestDistance = distance;
                     nearestPlayer = otherPlayer;
                 }

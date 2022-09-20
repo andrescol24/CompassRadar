@@ -2,7 +2,7 @@
 #                                     By xX_andrescol_Xx
 #                                     Configuration Guide
 # ---------------------------------------------------------------------------------------------------------
-# disableInWorlds: put here the worlds where you want that the compass doesnt tracker players or locations
+# trackerPlayer.disableInWorlds: put here the worlds where you want the compass doesn't tracker players
 # trackerPlayer.enable: Do you want tracker players?
 # trackerPlayer.maxDistance: It's the max distance on which compass is going to find players. Set 0 for all the world
 # trackerLocation: You can create specific location for what the compass points them
@@ -15,11 +15,13 @@
 # [WARNING] I suggest you that the trackerPlayer.maxDistance is less than 50, because under 50 blocks if the two players
 # have a compass, the compasses may go crazy
 
-trackerPlayer: 
+trackerPlayer:
   enable: true
   maxDistance: 600
-  disableInWorlds: 
-  - Lobby
+  playerNameUntil: 0
+  stopTrackingAt: 0
+  disableInWorlds:
+    - Lobby
 
 trackerLocation:
   enable: true

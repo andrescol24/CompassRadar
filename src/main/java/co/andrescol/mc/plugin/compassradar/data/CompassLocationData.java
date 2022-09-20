@@ -11,14 +11,14 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 public class CompassLocationData {
 
-    private List<CompassLocation> locations;
+    private Set<CompassLocation> locations;
     private static final String LOCATIONS_FILE_NAME = "locations.yml";
     private static final String LOCATIONS_SECTION = "locations";
 
@@ -32,7 +32,7 @@ public class CompassLocationData {
             yaml.load(file);
             ConfigurationSection section = yaml.getConfigurationSection(LOCATIONS_SECTION);
 
-            this.locations = new LinkedList<>();
+            this.locations = new HashSet<>();
             if (section != null) {
                 section.getKeys(false).forEach(key -> locations.add(new CompassLocation(Objects.requireNonNull(section.getConfigurationSection(key)))));
             }
