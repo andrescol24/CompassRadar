@@ -28,6 +28,5 @@ trackerPlayer:
 trackerLocation:
   enable: true
   maxDistance: 0
-  locations:
   disableInWorlds: 
   - Lobby
