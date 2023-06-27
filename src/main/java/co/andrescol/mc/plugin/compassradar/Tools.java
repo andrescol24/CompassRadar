@@ -3,6 +3,7 @@ package co.andrescol.mc.plugin.compassradar;
 import co.andrescol.mc.library.configuration.AMessage;
 import co.andrescol.mc.plugin.compassradar.configuration.CustomConfiguration;
 import co.andrescol.mc.plugin.compassradar.configuration.Message;
+import co.andrescol.mc.plugin.compassradar.hook.HookManager;
 import co.andrescol.mc.plugin.compassradar.object.TrackedPosition;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -41,11 +42,12 @@ public interface Tools {
         return (int) from.distance(to);
     }
 
-    static Optional<TrackedPosition> getNearestPlayer(List<Player> players, Player player) {
+    static Optional<TrackedPosition> getNearestPlayer(List<Player> enemies, Player player) {
+        enemies = HookManager.getInstance().filterEnemiesByHooks(player, enemies);
         CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
         Player nearestPlayer = null;
         int nearestDistance = (configuration.getMaxPlayer() == 0) ? Integer.MAX_VALUE : configuration.getMaxPlayer();
-        for (Player otherPlayer : players) {
+        for (Player otherPlayer : enemies) {
             int distance = calculateDistance(otherPlayer.getLocation(), player.getLocation());
             if (otherPlayer != player && otherPlayer.getGameMode().equals(GameMode.SURVIVAL)) {
                 if (distance < nearestDistance && distance > configuration.getStopTrackingAt()) {

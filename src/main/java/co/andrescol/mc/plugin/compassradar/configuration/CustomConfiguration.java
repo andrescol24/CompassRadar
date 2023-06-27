@@ -5,7 +5,7 @@ import co.andrescol.mc.library.configuration.AConfigurationObject;
 
 import java.util.List;
 
-public class CustomConfiguration extends AConfigurationObject {
+public class CustomConfiguration implements AConfigurationObject {
     @AConfigurationKey("trackerPlayer.disableInWorlds")
     private List<String> playerDisableWorlds;
 
@@ -28,6 +28,9 @@ public class CustomConfiguration extends AConfigurationObject {
 
     @AConfigurationKey("trackerPlayer.stopTrackingAt")
     private int stopTrackingAt;
+
+    @AConfigurationKey("hooks.superiorskyblock2.enabled")
+    private boolean superiorSkyBlockEnabled;
 
     public List<String> getPlayerDisableWorlds() {
         return playerDisableWorlds;
@@ -59,5 +62,9 @@ public class CustomConfiguration extends AConfigurationObject {
 
     public int getStopTrackingAt() {
         return stopTrackingAt;
+    }
+
+    public boolean isSuperiorSkyBlockEnabled() {
+        return superiorSkyBlockEnabled;
     }
 }

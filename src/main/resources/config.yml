@@ -12,7 +12,7 @@
 # trakcerLocation.maxDistance: Max distance o which compass is going to find locations. set 0 for all the world
 # trackerLocation.locations: there are the all location that you will create with the specific location. Keep in mind
 # that x, y and z are Integers
-# hooks.factions.onlyNeutralEnemy: this section, only works if CompassRadar is hook with Factions. set to true if
+# hooks.superiorskyblock2.enabled: true if you want to hook with SuperiorSkyBlock2 plugin
 # you want players enemy or neutrals will be tracked. Keep in mind that if you set false it, factions members will be tracked too
 # [WARNING] I suggest you that the trackerPlayer.maxDistance is less than 50, because under 50 blocks if the two players
 # have a compass, the compasses may go crazy
@@ -30,3 +30,7 @@ trackerLocation:
   maxDistance: 0
   disableInWorlds: 
   - Lobby
+
+hooks:
+  superiorskyblock2:
+    enabled: true
