@@ -15,7 +15,10 @@ import org.bukkit.inventory.ItemStack;
 public class CompassListener implements Listener {
     @EventHandler
     public void onCompassTracker(PlayerInteractEvent e) {
+        // If player does not have permission to use the compass return
         if (!e.getPlayer().hasPermission("compassradar.use")) return;
+
+        // If the item in the main hand is not a compass return
         if (Material.COMPASS != e.getPlayer().getInventory().getItemInMainHand().getType()) return;
 
         Player player = e.getPlayer();

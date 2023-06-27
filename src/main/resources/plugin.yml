@@ -1,7 +1,7 @@
 name: CompassRadar
 author: xX_andrescol_Xx
 main: co.andrescol.mc.plugin.compassradar.CompassRadarPlugin
-version: 1.1.0
+version: 2.1.0
 description: You can tracker players and locations with this plugin
 api-version: 1.19
 
