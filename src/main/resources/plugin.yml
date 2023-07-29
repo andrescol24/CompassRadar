@@ -11,9 +11,9 @@ commands:
     aliases: compass
     permission: compassradar.cmd
 permissions:
-  compassradar.cmd: { default: op, description: allow to see the help message }
   compassradar.invisible: { default: false, description: Make the player invisible from the tracker }
   compassradar.use: { default: op, description: allow use the compass as radar from main hand }
+  compassradar.cmd: { default: op, description: allow to see the help message }
   compassradar.cmd.player: { default: op, description: allow use the command /compass player }
   compassradar.cmd.location: { default: op, description: allow use the command /compass location }
   compassradar.cmd.addlocation: { default: op, description: allow to add a location }
