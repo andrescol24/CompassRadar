@@ -12,20 +12,19 @@ commands:
     permission: compassradar.cmd
 permissions:
   compassradar.invisible: { default: false, description: Make the player invisible from the tracker }
-  compassradar.use: { default: op, description: allow use the compass as radar from main hand }
-  compassradar.cmd: { default: op, description: allow to see the help message }
-  compassradar.cmd.player: { default: op, description: allow use the command /compass player }
-  compassradar.cmd.location: { default: op, description: allow use the command /compass location }
-  compassradar.cmd.addlocation: { default: op, description: allow to add a location }
-  compassradar.cmd.removelocation: { default: op, description: allow to remove a location }
-  compassradar.cmd.listlocations: { default: op, description: allow to show the location list }
-  compassradar.cmd.reload: { default: op, description: allow to reload the plugin }
+  compassradar.use: { default: op, description: allows to use the compass as radar from main hand }
+  compassradar.cmd: { default: op, description: allows to see the help message }
+  compassradar.cmd.player: { default: op, description: allows to use the command /compass player }
+  compassradar.cmd.location: { default: op, description: allows to use the command /compass location }
+  compassradar.cmd.addlocation: { default: op, description: allows to add a location }
+  compassradar.cmd.removelocation: { default: op, description: allows to remove a location }
+  compassradar.cmd.listlocations: { default: op, description: allows to show the location list }
+  compassradar.cmd.reload: { default: op, description: allows to reload the plugin }
   compassradar.player:
     default: false
-    description: allow to use the compass from main hand, command player, locations and location
+    description: allows to use the compass from the main hand, run the track player and track location command
     children:
       compassradar.cmd: true
       compassradar.cmd.player: true
       compassradar.cmd.location: true
-      compassradar.cmd.listlocations: true
       compassradar.use: true
