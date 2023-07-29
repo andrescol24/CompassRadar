@@ -15,7 +15,7 @@ import java.util.List;
 public class ListLocationsSubCommand extends ASubCommand {
 
     public ListLocationsSubCommand() {
-        super("locations", "compassradar.cmd.listlocation");
+        super("locations", "compassradar.cmd.listlocations");
     }
 
     @Override

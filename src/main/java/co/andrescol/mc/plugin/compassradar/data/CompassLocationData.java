@@ -1,7 +1,7 @@
 package co.andrescol.mc.plugin.compassradar.data;
 
 import co.andrescol.mc.plugin.compassradar.CompassRadarPlugin;
-import co.andrescol.mc.plugin.compassradar.Tools;
+import co.andrescol.mc.plugin.compassradar.CompassTracker;
 import co.andrescol.mc.plugin.compassradar.configuration.CustomConfiguration;
 import co.andrescol.mc.plugin.compassradar.object.CompassLocation;
 import co.andrescol.mc.plugin.compassradar.object.TrackedPosition;
@@ -39,23 +39,6 @@ public class CompassLocationData {
         } catch (Exception e) {
             CompassRadarPlugin.getInstance().error("Error initializing CompassLocationData", e);
         }
-    }
-
-    public Optional<TrackedPosition> getNearestLocation(Player player) {
-        CompassLocation nearestLocation = null;
-        CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
-        int nearestDistance = (configuration.getMaxLocation() == 0) ? Integer.MAX_VALUE : configuration.getMaxLocation();
-
-        for (CompassLocation compassLocation : this.locations) {
-            int actualDistance = Tools.calculateDistance(player.getLocation(), compassLocation.getLocation());
-            if (actualDistance < nearestDistance) {
-                nearestDistance = actualDistance;
-                nearestLocation = compassLocation;
-            }
-        }
-        return nearestLocation != null
-                ? Optional.of(new TrackedPosition(nearestLocation.getName(), player, nearestDistance, nearestLocation.getLocation()))
-                : Optional.empty();
     }
 
     public boolean addCompassLocation(CompassLocation compassLocation) {
@@ -99,7 +82,6 @@ public class CompassLocationData {
             CompassRadarPlugin.getInstance().error("Error saving new compass location: {}", e, compassLocation.getName());
         }
     }
-
     public String getListOfCompassLocationAsString() {
         if (this.locations.isEmpty()) {
             return null;
@@ -108,6 +90,9 @@ public class CompassLocationData {
             this.locations.forEach(x -> builder.append(x.toString()).append("\n"));
             return builder.toString();
         }
+    }
+    public Set<CompassLocation> getLocations() {
+        return this.locations;
     }
 
     /*

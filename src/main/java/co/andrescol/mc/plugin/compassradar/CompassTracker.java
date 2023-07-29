@@ -3,7 +3,9 @@ package co.andrescol.mc.plugin.compassradar;
 import co.andrescol.mc.library.configuration.AMessage;
 import co.andrescol.mc.plugin.compassradar.configuration.CustomConfiguration;
 import co.andrescol.mc.plugin.compassradar.configuration.Message;
+import co.andrescol.mc.plugin.compassradar.data.CompassLocationData;
 import co.andrescol.mc.plugin.compassradar.hook.HookManager;
+import co.andrescol.mc.plugin.compassradar.object.CompassLocation;
 import co.andrescol.mc.plugin.compassradar.object.TrackedPosition;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -14,10 +16,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 import java.util.Optional;
 
-public interface Tools {
+/**
+ * This interface contains default implementation of main methods to track player and locations
+ */
+public interface CompassTracker {
 
     static void showMessageInItem(TrackedPosition trackedPosition, ItemStack item, Message message) {
-        int distance = Tools.calculateDistance(trackedPosition.player().getLocation(), trackedPosition.destination());
+        int distance = CompassTracker.calculateDistance(trackedPosition.player().getLocation(), trackedPosition.destination());
         CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
 
         String messageToShow;
@@ -44,6 +49,7 @@ public interface Tools {
 
     static Optional<TrackedPosition> getNearestPlayer(List<Player> enemies, Player player) {
         enemies = HookManager.getInstance().filterEnemiesByHooks(player, enemies);
+        enemies = enemies.stream().filter(enemy -> !enemy.hasPermission("compassradar.invisible")).toList();
         CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
         Player nearestPlayer = null;
         int nearestDistance = (configuration.getMaxPlayer() == 0) ? Integer.MAX_VALUE : configuration.getMaxPlayer();
@@ -59,5 +65,22 @@ public interface Tools {
         if (nearestPlayer != null)
             return Optional.of(new TrackedPosition(nearestPlayer.getName(), player, nearestDistance, nearestPlayer.getLocation()));
         return Optional.empty();
+    }
+
+    static Optional<TrackedPosition> getNearestLocation(Player player) {
+        CompassLocation nearestLocation = null;
+        CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
+        int nearestDistance = (configuration.getMaxLocation() == 0) ? Integer.MAX_VALUE : configuration.getMaxLocation();
+
+        for (CompassLocation compassLocation : CompassLocationData.getInstance().getLocations()) {
+            int actualDistance = CompassTracker.calculateDistance(player.getLocation(), compassLocation.getLocation());
+            if (actualDistance < nearestDistance) {
+                nearestDistance = actualDistance;
+                nearestLocation = compassLocation;
+            }
+        }
+        return nearestLocation != null
+                ? Optional.of(new TrackedPosition(nearestLocation.getName(), player, nearestDistance, nearestLocation.getLocation()))
+                : Optional.empty();
     }
 }

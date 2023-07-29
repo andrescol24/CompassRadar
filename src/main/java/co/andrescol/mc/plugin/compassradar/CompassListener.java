@@ -2,19 +2,21 @@ package co.andrescol.mc.plugin.compassradar;
 
 import co.andrescol.mc.plugin.compassradar.configuration.CustomConfiguration;
 import co.andrescol.mc.plugin.compassradar.configuration.Message;
-import co.andrescol.mc.plugin.compassradar.data.CompassLocationData;
 import co.andrescol.mc.plugin.compassradar.object.TrackedPosition;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class CompassListener implements Listener {
     @EventHandler
     public void onCompassTracker(PlayerInteractEvent e) {
+        if(e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+
         // If player does not have permission to use the compass return
         if (!e.getPlayer().hasPermission("compassradar.use")) return;
 
@@ -29,11 +31,11 @@ public class CompassListener implements Listener {
 
         CustomConfiguration configuration = CompassRadarPlugin.getConfigurationObject();
         if (configuration.isLocationEnable() && !configuration.getPlayerDisableWorlds().contains(world.getName())) {
-            nearestLocation = CompassLocationData.getInstance().getNearestLocation(player).orElse(null);
+            nearestLocation = CompassTracker.getNearestLocation(player).orElse(null);
         }
 
         if (configuration.isPlayerEnable() && !configuration.getLocationDisableWorlds().contains(world.getName())) {
-            nearestPlayer = Tools.getNearestPlayer(world.getPlayers(), player).orElse(null);
+            nearestPlayer = CompassTracker.getNearestPlayer(world.getPlayers(), player).orElse(null);
         }
 
         Message message;
@@ -56,6 +58,6 @@ public class CompassListener implements Listener {
             positionToGo = new TrackedPosition("", player, 0, player.getLocation());
             message = Message.NO_NEAREST;
         }
-        Tools.showMessageInItem(positionToGo, compass, message);
+        CompassTracker.showMessageInItem(positionToGo, compass, message);
     }
 }

@@ -1,7 +1,7 @@
 name: CompassRadar
 author: xX_andrescol_Xx
 main: co.andrescol.mc.plugin.compassradar.CompassRadarPlugin
-version: 2.1.0
+version: 2.1.1
 description: You can tracker players and locations with this plugin
 api-version: 1.19
 
@@ -12,12 +12,13 @@ commands:
     permission: compassradar.cmd
 permissions:
   compassradar.cmd: { default: op, description: allow to see the help message }
+  compassradar.invisible: { default: false, description: Make the player invisible from the tracker }
   compassradar.use: { default: op, description: allow use the compass as radar from main hand }
   compassradar.cmd.player: { default: op, description: allow use the command /compass player }
   compassradar.cmd.location: { default: op, description: allow use the command /compass location }
   compassradar.cmd.addlocation: { default: op, description: allow to add a location }
   compassradar.cmd.removelocation: { default: op, description: allow to remove a location }
-  compassradar.cmd.listlocation: { default: op, description: allow to show the location list }
+  compassradar.cmd.listlocations: { default: op, description: allow to show the location list }
   compassradar.cmd.reload: { default: op, description: allow to reload the plugin }
   compassradar.player:
     default: false
@@ -26,5 +27,5 @@ permissions:
       compassradar.cmd: true
       compassradar.cmd.player: true
       compassradar.cmd.location: true
-      compassradar.cmd.locations: true
+      compassradar.cmd.listlocations: true
       compassradar.use: true

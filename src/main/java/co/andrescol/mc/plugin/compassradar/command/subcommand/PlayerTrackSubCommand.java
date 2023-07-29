@@ -3,7 +3,7 @@ package co.andrescol.mc.plugin.compassradar.command.subcommand;
 import co.andrescol.mc.library.command.ASubCommand;
 import co.andrescol.mc.library.configuration.AMessage;
 import co.andrescol.mc.plugin.compassradar.CompassRadarPlugin;
-import co.andrescol.mc.plugin.compassradar.Tools;
+import co.andrescol.mc.plugin.compassradar.CompassTracker;
 import co.andrescol.mc.plugin.compassradar.configuration.CustomConfiguration;
 import co.andrescol.mc.plugin.compassradar.configuration.Message;
 import co.andrescol.mc.plugin.compassradar.object.TrackedPosition;
@@ -39,7 +39,7 @@ public class PlayerTrackSubCommand extends ASubCommand {
 
         ItemStack compass;
         if ((compass = player.getInventory().getItemInMainHand()).getType() == Material.COMPASS) {
-            Optional<TrackedPosition> playerFoundOptional = Tools.getNearestPlayer(world.getPlayers(), player);
+            Optional<TrackedPosition> playerFoundOptional = CompassTracker.getNearestPlayer(world.getPlayers(), player);
             TrackedPosition positionToGo;
             Message message;
             if (playerFoundOptional.isPresent()) {
@@ -49,7 +49,7 @@ public class PlayerTrackSubCommand extends ASubCommand {
                 positionToGo = new TrackedPosition("", player, 0, player.getLocation());
                 message = Message.NO_NEAREST;
             }
-            Tools.showMessageInItem(positionToGo, compass, message);
+            CompassTracker.showMessageInItem(positionToGo, compass, message);
         } else {
             AMessage.sendMessage(commandSender, Message.NEED_COMPASS_IN_HAND);
         }
