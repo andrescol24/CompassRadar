@@ -27,5 +27,4 @@ permissions:
       compassradar.cmd: true
       compassradar.cmd.player: true
       compassradar.cmd.location: true
-      compassradar.cmd.listlocations: true
       compassradar.use: true
